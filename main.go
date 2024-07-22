@@ -1,13 +1,21 @@
 package main
 
-import "github.com/gin-gonic/gin"
+import (
+	"fmt"
+
+	"github.com/RasoulZamani/hiGin/config"
+	"github.com/gin-gonic/gin"
+)
 
 func main() {
+	myEnv := config.ReadEnv()
+	fmt.Println(myEnv)
 	r := gin.Default()
 	r.GET("/ping", func(c *gin.Context) {
 		c.JSON(200, gin.H{
-			"message": "pong",
+			"app name": myEnv["APP_NAME"],
+			"message":  "pong",
 		})
 	})
-	r.Run() // listen and serve on 0.0.0.0:8080
+	r.Run(myEnv["HOST"] + ":" + myEnv["PORT"]) // listen and serve on 0.0.0.0:8080
 }
