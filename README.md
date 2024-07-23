@@ -4,6 +4,12 @@ This is a simple educational web app some main features are:
 - Written in **Golang** and **Gin** framework
 - Command line support like help, version and serve by **kobra** package.
 
+# Installation
+After cloning and install dependencies, for runnig app you need run mysql db too, for example:
+```
+docker run --name mysql-db -e MYSQL_ROOT_PASSWORD=mysql_root_password -e MYSQL_DATABASE=mysql_db -e MYSQL_USER=mysql_user -e MYSQL_PASSWORD=mysql_password -p 3306:3306 -d mysql
+```
+
 
 # Usage
 After installation, provide environ variables in a .env file according to env.example.Then to see all available commands of this app type:
