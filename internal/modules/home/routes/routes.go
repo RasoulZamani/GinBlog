@@ -20,10 +20,9 @@ func Routes(route *gin.Engine) {
 	})
 
 	route.GET("/about", func(c *gin.Context) {
-		// c.JSON(200, gin.H{
-		html.Render(c, http.StatusOK, "modules/home/html/about", gin.H{
-			"title":   myEnv["APP_NAME"],
-			"message": "about this app",
+		c.JSON(200, gin.H{
+			"APP_NAME": myEnv["APP_NAME"],
+			"message":  "about this app",
 		})
 
 	})

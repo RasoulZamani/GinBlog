@@ -1,7 +1,7 @@
 package routing
 
 import (
-	"github.com/RasoulZamani/hiGin/internal/modules/providers/routes"
+	"github.com/RasoulZamani/hiGin/internal/providers/routes"
 	"github.com/gin-gonic/gin"
 )
 

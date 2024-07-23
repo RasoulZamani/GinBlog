@@ -1,7 +1,7 @@
 package html
 
 import (
-	"github.com/RasoulZamani/hiGin/internal/modules/providers/view"
+	"github.com/RasoulZamani/hiGin/internal/providers/view"
 	"github.com/gin-gonic/gin"
 )
 
