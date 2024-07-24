@@ -4,17 +4,17 @@ import (
 	"net/http"
 
 	"github.com/RasoulZamani/hiGin/config"
-	ArticleRepository "github.com/RasoulZamani/hiGin/internal/modules/article/repositories"
+	ArticleService "github.com/RasoulZamani/hiGin/internal/modules/article/services"
 	"github.com/gin-gonic/gin"
 )
 
 type controller struct {
-	articleRepository ArticleRepository.ArticleRepositoryInterface
+	articleService ArticleService.ArticleServiceInterface
 }
 
 func New() *controller {
 	return &controller{
-		articleRepository: ArticleRepository.New(),
+		articleService: ArticleService.New(),
 	}
 }
 
@@ -26,7 +26,8 @@ func (controller *controller) Index(c *gin.Context) {
 	// 	"message":  "Welcome Home",
 	// })
 	c.JSON(http.StatusOK, gin.H{
-		"articles": controller.articleRepository.List(3),
+		"featured_articles": controller.articleService.GetFeaturedArticles(),
+		"usual_articles":    controller.articleService.GetUsualArticles(),
 	})
 }
 
