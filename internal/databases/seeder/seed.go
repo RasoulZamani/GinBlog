@@ -31,8 +31,8 @@ func Seed() {
 	// create  some article for this example user
 	for i := 0; i < 5; i++ {
 		article := articleModel.Article{
-			Title:   "Example Title_ " + strconv.Itoa(i),
-			Content: "Example content" + strconv.Itoa(i),
+			Title:   "Example Title_" + strconv.Itoa(i),
+			Content: "Example content_" + strconv.Itoa(i),
 			UserID:  1,
 		}
 		db.Create(&article)
