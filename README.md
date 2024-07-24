@@ -5,10 +5,7 @@ This is a simple educational web app some main features are:
 - Command line support like help, version and serve by **kobra** package.
 
 # Installation
-After cloning and install dependencies, for runnig app you need run mysql db too, for example:
-```
-docker run --name mysql-db -e MYSQL_ROOT_PASSWORD=mysql_root_password -e MYSQL_DATABASE=mysql_db -e MYSQL_USER=mysql_user -e MYSQL_PASSWORD=mysql_password -p 3306:3306 -d mysql
-```
+After cloning and install dependencies, for running app you need run mysql db and provide credentials in .env.
 
 
 # Usage
@@ -25,8 +22,11 @@ Usage:
 Available Commands:
   completion  Generate the autocompletion script for the specified shell
   help        Help about any command
+  migrate     Migrate models to database tables
+  seed        Seed database
   serve       Run server and serve web app
   version     Print the version number of App
+
 
 Flags:
   -h, --help   help for help
@@ -34,4 +34,4 @@ Flags:
 Use "help [command] --help" for more information about a command.
 ```
 
-For example to run web app: `go run main.go serve` and then go to the host:port you had declared in .env.
+For example to run web app: `go run main.go serve` and then go to the host:port you had declared in .env.For first time you should `migrate` and also can `seed` database at first.
