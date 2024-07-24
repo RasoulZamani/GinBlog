@@ -24,3 +24,12 @@ func (articleRepository *ArticleRepository) List(limit int) []models.Article {
 	articleRepository.DB.Limit(limit).Joins("User").Find(&articles)
 	return articles
 }
+
+// method for get one article by id
+func (articleRepository *ArticleRepository) Find(id int) models.Article {
+	var article models.Article
+
+	articleRepository.DB.Joins("User").First(&article, id)
+
+	return article
+}

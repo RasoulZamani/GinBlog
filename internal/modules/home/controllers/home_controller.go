@@ -9,17 +9,17 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type controller struct {
+type Controller struct {
 	articleService ArticleService.ArticleServiceInterface
 }
 
-func New() *controller {
-	return &controller{
+func New() *Controller {
+	return &Controller{
 		articleService: ArticleService.New(),
 	}
 }
 
-func (controller *controller) Index(c *gin.Context) {
+func (controller *Controller) Index(c *gin.Context) {
 	myEnv := config.ReadEnv()
 	// c.JSON(200, gin.H{
 	html.Render(c, http.StatusOK, "modules/home/html/home", gin.H{
@@ -30,7 +30,7 @@ func (controller *controller) Index(c *gin.Context) {
 	})
 }
 
-func (controller *controller) About(c *gin.Context) {
+func (controller *Controller) About(c *gin.Context) {
 	myEnv := config.ReadEnv()
 	c.JSON(200, gin.H{
 		"APP_NAME": myEnv["APP_NAME"],
