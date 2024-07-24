@@ -5,6 +5,7 @@ import (
 
 	"github.com/RasoulZamani/hiGin/config"
 	ArticleService "github.com/RasoulZamani/hiGin/internal/modules/article/services"
+	"github.com/RasoulZamani/hiGin/pkg/html"
 	"github.com/gin-gonic/gin"
 )
 
@@ -19,15 +20,13 @@ func New() *controller {
 }
 
 func (controller *controller) Index(c *gin.Context) {
-	// myEnv := config.ReadEnv()
-	// // c.JSON(200, gin.H{
-	// html.Render(c, http.StatusOK, "modules/home/html/home", gin.H{
-	// 	"APP_NAME": myEnv["APP_NAME"],
-	// 	"message":  "Welcome Home",
-	// })
-	c.JSON(http.StatusOK, gin.H{
+	myEnv := config.ReadEnv()
+	// c.JSON(200, gin.H{
+	html.Render(c, http.StatusOK, "modules/home/html/home", gin.H{
+		"APP_NAME":          myEnv["APP_NAME"],
+		"message":           "Welcome Home",
 		"featured_articles": controller.articleService.GetFeaturedArticles(),
-		"usual_articles":    controller.articleService.GetUsualArticles(),
+		"story_articles":    controller.articleService.GetUsualArticles(),
 	})
 }
 

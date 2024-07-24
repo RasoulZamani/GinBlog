@@ -4,7 +4,7 @@ import "github.com/RasoulZamani/hiGin/internal/modules/user/models"
 
 type User struct {
 	ID       uint
-	Username string
+	UserName string
 	Email    string
 }
 
@@ -15,7 +15,7 @@ type Users struct {
 func ToUser(user models.User) User {
 	return User{
 		ID:       user.ID,
-		Username: user.UserName,
+		UserName: user.UserName,
 		Email:    *user.Email,
 	}
 }
