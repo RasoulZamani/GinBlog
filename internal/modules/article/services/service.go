@@ -1,8 +1,8 @@
 package services
 
 import (
-	"github.com/RasoulZamani/hiGin/internal/modules/article/models"
 	"github.com/RasoulZamani/hiGin/internal/modules/article/repositories"
+	"github.com/RasoulZamani/hiGin/internal/modules/article/responses"
 )
 
 type ArticleService struct {
@@ -15,10 +15,13 @@ func New() *ArticleService {
 	}
 }
 
-func (articleService *ArticleService) GetFeaturedArticles() []models.Article {
-	return articleService.articleRepository.List(2)
+func (articleService *ArticleService) GetFeaturedArticles() responses.Articles {
+	articles := articleService.articleRepository.List(2)
+
+	return responses.ToArticles(articles)
 }
 
-func (articleService *ArticleService) GetUsualArticles() []models.Article {
-	return articleService.articleRepository.List(3)
+func (articleService *ArticleService) GetUsualArticles() responses.Articles {
+	articles := articleService.articleRepository.List(3)
+	return responses.ToArticles(articles)
 }
