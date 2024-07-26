@@ -6,6 +6,7 @@ import (
 
 	"github.com/RasoulZamani/hiGin/internal/modules/user/requests/auth"
 	UserService "github.com/RasoulZamani/hiGin/internal/modules/user/services"
+	"github.com/RasoulZamani/hiGin/pkg/errors"
 	"github.com/RasoulZamani/hiGin/pkg/html"
 	"github.com/gin-gonic/gin"
 )
@@ -31,7 +32,12 @@ func (controller *Controller) HandleRegister(c *gin.Context) {
 	// validate request
 	var request auth.RegisterRequest
 	if err := c.ShouldBind(&request); err != nil {
-		c.Redirect(http.StatusFound, "/register")
+		errors.Init()
+		errors.SetFromErrors(err)
+
+		c.JSON(http.StatusOK, gin.H{
+			"errors": errors.Get(),
+		})
 		return
 	}
 
