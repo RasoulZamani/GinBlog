@@ -6,7 +6,8 @@ This is a simple educational web app some main features are:
 - Emphasize on organized and good structure for code that can be used in other big projects.E.g., repository and service pattern is implemented; each module has separate directory and provider, packages, and controller are used.
 - **gorm** object relational mapper is used to connect to mysql db. and also `migrate` and `seed` (for fill db with example data) commands are available.
 - error handling of forms by sessions.
-- registration, login and logout users.
+- registration, login and logout users.(Check login-users by middleware)
+
 
 
 # Installation
