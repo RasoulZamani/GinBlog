@@ -21,7 +21,7 @@ func New() *UserService {
 	}
 }
 
-func (UserService *UserService) Create(request auth.RegisterRequest) (responses.User, error) {
+func (userService *UserService) Create(request auth.RegisterRequest) (responses.User, error) {
 	var response responses.User
 	var user models.User
 
@@ -35,11 +35,21 @@ func (UserService *UserService) Create(request auth.RegisterRequest) (responses.
 	user.Email = &request.Email
 	user.Password = string(hashedPassword)
 
-	newUser := UserService.userRepository.Create(user)
+	newUser := userService.userRepository.Create(user)
 
 	if newUser.ID == 0 {
 		return response, errors.New("error on creating user")
 	}
 
 	return responses.ToUser(newUser), nil
+}
+
+func (userService *UserService) CheckEmailExist(email string) bool {
+	user := userService.userRepository.FindByEmail(email)
+	if user.ID != 0 {
+		return true
+	}
+
+	return false
+
 }

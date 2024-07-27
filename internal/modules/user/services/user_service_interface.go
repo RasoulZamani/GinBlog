@@ -7,4 +7,5 @@ import (
 
 type UserServiceInterface interface {
 	Create(request auth.RegisterRequest) (responses.User, error)
+	CheckEmailExist(email string) bool
 }

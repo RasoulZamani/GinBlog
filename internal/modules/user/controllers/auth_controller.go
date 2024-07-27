@@ -3,6 +3,7 @@ package controllers
 import (
 	"log"
 	"net/http"
+	"strconv"
 
 	"github.com/RasoulZamani/hiGin/internal/modules/user/requests/auth"
 	UserService "github.com/RasoulZamani/hiGin/internal/modules/user/services"
@@ -34,9 +35,28 @@ func (controller *Controller) HandleRegister(c *gin.Context) {
 
 	// validate request
 	var request auth.RegisterRequest
+
 	if err := c.ShouldBind(&request); err != nil {
 		errors.Init()
 		errors.SetFromErrors(err)
+
+		// save errors in session
+		sessions.Set(c, "registrationFormErrors", converters.MapToString(errors.Get()))
+		// session then send to template by WithGlobalData function
+
+		// save form data to session in order to re-present them if errors happened
+		old.Init()
+		old.Set(c)
+		sessions.Set(c, "oldRegisterForm", converters.ListMapToString(old.Get()))
+		c.Redirect(http.StatusFound, "/register")
+		return
+	}
+
+	// check if user is already exist with email
+
+	if controller.userService.CheckEmailExist(request.Email) {
+		errors.Init()
+		errors.Add("Email", "The user with this email is already exists")
 
 		// save errors in session
 		sessions.Set(c, "registrationFormErrors", converters.MapToString(errors.Get()))
@@ -57,6 +77,8 @@ func (controller *Controller) HandleRegister(c *gin.Context) {
 		c.Redirect(http.StatusFound, "/register")
 		return
 	}
+	//store created user id in sessions
+	sessions.Set(c, "auth", strconv.Itoa(int(user.ID)))
 
 	log.Printf("user created successfully with username: %s", user.UserName)
 	c.Redirect(http.StatusFound, "/")

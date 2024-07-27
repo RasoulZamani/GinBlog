@@ -23,6 +23,10 @@ func SetFromErrors(err error) {
 	}
 }
 
+func Add(key string, value string) {
+	errorsList[key] = value
+}
+
 // this function get tag and get message for it; e.g.:"required" -> this field is required
 func GetErrorMessage(tag string) string {
 	return validations.RegistrationFormErrorMessage()[tag]
