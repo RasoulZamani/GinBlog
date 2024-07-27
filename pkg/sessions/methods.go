@@ -40,5 +40,12 @@ func Get(c *gin.Context, key string) string {
 		return response.(string)
 	}
 	return ""
+}
 
+// function for deleting key-val from session
+func Remove(c *gin.Context, key string) {
+	session := sessions.Default(c)
+
+	session.Delete(key)
+	session.Save()
 }

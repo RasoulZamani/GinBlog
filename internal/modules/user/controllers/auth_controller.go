@@ -134,6 +134,16 @@ func (controller *Controller) HandleLogin(c *gin.Context) {
 	//store login user id in sessions
 	sessions.Set(c, "auth", strconv.Itoa(int(user.ID)))
 
-	log.Printf("user logged successfully with username: %s", user.UserName)
+	log.Printf("user logged in successfully with username: %s", user.UserName)
 	c.Redirect(http.StatusFound, "/")
+}
+
+// ****************************Log out *********************************
+
+func (controller *Controller) HandleLogout(c *gin.Context) {
+	// removing user from sessions and redirect to home
+	sessions.Remove(c, "auth")
+	log.Printf("user logged out successfully")
+	c.Redirect(http.StatusFound, "/")
+
 }
