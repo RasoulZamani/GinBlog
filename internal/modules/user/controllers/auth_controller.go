@@ -9,6 +9,7 @@ import (
 	"github.com/RasoulZamani/hiGin/pkg/converters"
 	"github.com/RasoulZamani/hiGin/pkg/errors"
 	"github.com/RasoulZamani/hiGin/pkg/html"
+	"github.com/RasoulZamani/hiGin/pkg/old"
 	"github.com/RasoulZamani/hiGin/pkg/sessions"
 	"github.com/gin-gonic/gin"
 )
@@ -40,6 +41,11 @@ func (controller *Controller) HandleRegister(c *gin.Context) {
 		// save errors in session
 		sessions.Set(c, "registrationFormErrors", converters.MapToString(errors.Get()))
 		// session then send to template by WithGlobalData function
+
+		// save form data to session in order to re-present them if errors happened
+		old.Init()
+		old.Set(c)
+		sessions.Set(c, "oldRegisterForm", converters.ListMapToString(old.Get()))
 
 		c.Redirect(http.StatusFound, "/register")
 		return
