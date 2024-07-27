@@ -12,7 +12,7 @@ func Set(c *gin.Context, key string, value string) {
 	session.Save()
 }
 
-// function for deleting key-val from session
+// function for get and then deleting key-val from session
 func Flash(c *gin.Context, key string) string {
 	session := sessions.Default(c)
 
@@ -20,6 +20,20 @@ func Flash(c *gin.Context, key string) string {
 	session.Save()
 
 	session.Delete(key)
+	session.Save()
+
+	if response != nil {
+		return response.(string)
+	}
+	return ""
+
+}
+
+// function for get val of key from session
+func Get(c *gin.Context, key string) string {
+	session := sessions.Default(c)
+
+	response := session.Get(key)
 	session.Save()
 
 	if response != nil {

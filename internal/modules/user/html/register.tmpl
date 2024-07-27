@@ -16,7 +16,7 @@
 
                 <form class="auth-container" method="POST" action="/register">
                     <p>
-                        <label for="name">Userame</label>
+                        <label for="name">Username</label>
                         <input type="text" id="name" name="name" placeholder="Name" value="{{ range .oldRegisterForm.name }}{{.}}{{end}}">
                         <span class="text-danger">{{ .registrationFormErrors.Name }}</span>
                     </p>

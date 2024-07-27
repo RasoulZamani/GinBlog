@@ -10,4 +10,7 @@ func Routes(route *gin.Engine) {
 	route.GET("/register", userController.Register)
 	route.POST("/register", userController.HandleRegister)
 
+	route.GET("/login", userController.Login)
+	route.POST("/login", userController.HandleLogin)
+
 }
