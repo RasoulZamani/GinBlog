@@ -33,3 +33,12 @@ func (articleRepository *ArticleRepository) Find(id int) models.Article {
 
 	return article
 }
+
+// method for create one article
+func (articleRepository *ArticleRepository) Create(article models.Article) models.Article {
+	var newArticle models.Article
+
+	articleRepository.DB.Create(&article).Scan(&newArticle)
+
+	return newArticle
+}

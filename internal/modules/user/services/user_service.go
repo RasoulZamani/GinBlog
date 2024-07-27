@@ -32,7 +32,7 @@ func (userService *UserService) Create(request auth.RegisterRequest) (responses.
 		return response, err
 	}
 	user.UserName = request.Name
-	user.Email = &request.Email
+	user.Email = request.Email
 	user.Password = string(hashedPassword)
 
 	newUser := userService.userRepository.Create(user)

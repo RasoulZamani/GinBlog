@@ -21,7 +21,7 @@ func Seed() {
 	exampleEmail := "example_user@example.com"
 	user := userModel.User{
 		UserName: "example_user",
-		Email:    &exampleEmail,
+		Email:    exampleEmail,
 		Password: string(hashedPassword),
 	}
 	log.Printf("User with username: %s created", user.UserName)

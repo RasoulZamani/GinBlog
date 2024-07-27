@@ -16,6 +16,6 @@ func ToUser(user models.User) User {
 	return User{
 		ID:       user.ID,
 		UserName: user.UserName,
-		Email:    *user.Email,
+		Email:    user.Email,
 	}
 }

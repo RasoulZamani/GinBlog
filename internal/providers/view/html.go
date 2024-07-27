@@ -14,10 +14,13 @@ func WithGlobalData(c *gin.Context, data gin.H) gin.H {
 
 	data["registrationFormErrors"] = converters.StringToMap(sessions.Flash(c, "registrationFormErrors"))
 	data["loginFormErrors"] = converters.StringToMap(sessions.Flash(c, "loginFormErrors"))
+	data["articleFormErrors"] = converters.StringToMap(sessions.Flash(c, "articleFormErrors"))
 
 	data["oldRegisterForm"] = converters.StringToListMap(sessions.Flash(c, "oldRegisterForm"))
 	data["oldLoginForm"] = converters.StringToListMap(sessions.Flash(c, "oldLoginForm"))
+	data["oldArticleForm"] = converters.StringToListMap(sessions.Flash(c, "oldArticleForm"))
 
 	data["auth"] = helper.Auth(c)
+
 	return data
 }

@@ -1,11 +1,19 @@
 package controllers
 
 import (
+	"fmt"
+	"log"
 	"net/http"
 	"strconv"
 
+	"github.com/RasoulZamani/hiGin/internal/modules/article/requests/articles"
 	ArticleService "github.com/RasoulZamani/hiGin/internal/modules/article/services"
+	"github.com/RasoulZamani/hiGin/internal/modules/user/helper"
+	"github.com/RasoulZamani/hiGin/pkg/converters"
+	"github.com/RasoulZamani/hiGin/pkg/errors"
 	"github.com/RasoulZamani/hiGin/pkg/html"
+	"github.com/RasoulZamani/hiGin/pkg/old"
+	"github.com/RasoulZamani/hiGin/pkg/sessions"
 	"github.com/gin-gonic/gin"
 )
 
@@ -68,13 +76,41 @@ func (controller *Controller) Show(c *gin.Context) {
 
 // ********************** Create Article ***********************
 func (controller *Controller) Create(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{
-		"message": "article creation form",
+	html.Render(c, http.StatusOK, "modules/article/html/create", gin.H{
+		"title": "Create article",
 	})
 }
 
 func (controller *Controller) Store(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{
-		"message": "article created",
-	})
+
+	// validate request
+	var request articles.StoreRequest
+
+	if err := c.ShouldBind(&request); err != nil {
+		errors.Init()
+		errors.SetFromErrors(err)
+
+		// save errors in session
+		sessions.Set(c, "articleFormErrors", converters.MapToString(errors.Get()))
+		// session then send to template by WithGlobalData function
+
+		// save form data to session in order to re-present them if errors happened
+		old.Init()
+		old.Set(c)
+		sessions.Set(c, "oldArticleForm", converters.ListMapToString(old.Get()))
+		c.Redirect(http.StatusFound, "/articles/create")
+		return
+	}
+
+	// create the article
+	user := helper.Auth(c)
+	article, err := controller.articleService.Store(request, user)
+	if err != nil {
+		c.Redirect(http.StatusFound, "/articles/create")
+		return
+	}
+
+	log.Printf("article created successfully with id: %d", article.ID)
+	c.Redirect(http.StatusFound, fmt.Sprintf("/articles/%d", article.ID))
+
 }
