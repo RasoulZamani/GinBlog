@@ -5,6 +5,7 @@ import (
 	"github.com/RasoulZamani/hiGin/pkg/database"
 	"github.com/RasoulZamani/hiGin/pkg/html"
 	"github.com/RasoulZamani/hiGin/pkg/routing"
+	"github.com/RasoulZamani/hiGin/pkg/sessions"
 )
 
 func Serve() {
@@ -12,6 +13,8 @@ func Serve() {
 	database.Connect()
 
 	routing.Init()
+
+	sessions.Start(routing.GetRouter())
 
 	static.LoadStatic(routing.GetRouter())
 

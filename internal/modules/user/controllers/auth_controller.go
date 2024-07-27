@@ -6,8 +6,10 @@ import (
 
 	"github.com/RasoulZamani/hiGin/internal/modules/user/requests/auth"
 	UserService "github.com/RasoulZamani/hiGin/internal/modules/user/services"
+	"github.com/RasoulZamani/hiGin/pkg/converters"
 	"github.com/RasoulZamani/hiGin/pkg/errors"
 	"github.com/RasoulZamani/hiGin/pkg/html"
+	"github.com/RasoulZamani/hiGin/pkg/sessions"
 	"github.com/gin-gonic/gin"
 )
 
@@ -35,9 +37,11 @@ func (controller *Controller) HandleRegister(c *gin.Context) {
 		errors.Init()
 		errors.SetFromErrors(err)
 
-		c.JSON(http.StatusOK, gin.H{
-			"errors": errors.Get(),
-		})
+		// save errors in session
+		sessions.Set(c, "registrationFormErrors", converters.MapToString(errors.Get()))
+		// session then send to template by WithGlobalData function
+
+		c.Redirect(http.StatusFound, "/register")
 		return
 	}
 
